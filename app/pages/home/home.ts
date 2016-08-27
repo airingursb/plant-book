@@ -1,15 +1,16 @@
+/// <reference path="../contact/wilddog.d.ts" />
 import {Component} from '@angular/core';
 import {NavController, Modal} from 'ionic-angular';
 import {BookDetails} from '../home/bookdetails';
 import {SearchPage} from '../home/search';
 import {CreatePage} from '../home/create';
+import 'wilddog';
 
 @Component({
     templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
-    bookList
-
+    bookList;
     constructor(private navCtrl:NavController) {
         this.bookList = [
             {
@@ -72,7 +73,7 @@ export class HomePage {
                 "bookUser": "zyktrcn",
                 "userHead": "../images/1.jpg"
             },
-        ]
+        ];
     }
 
     bookDetailClick(event, book) {
@@ -88,4 +89,5 @@ export class HomePage {
         let createModal = Modal.create(CreatePage);
         this.navCtrl.present(createModal);
     }
+
 }
