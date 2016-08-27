@@ -23,54 +23,66 @@ export class CreatePage {
     }
 
     bookUpload() {
-        if(this.bookList.bookName == '') {
+        if (this.bookList.bookName == '') {
             var bookNameToast = Toast.create({
-                message : '书名不能为空',
-                duration : 2000
+                message: '书名不能为空',
+                duration: 2000
             });
             this.navCtrl.present(bookNameToast);
-        }else if(this.bookList.bookPrice == '') {
+        } else if (this.bookList.bookPrice == '') {
             var bookPriceToast = Toast.create({
-                message : '书籍价格不能为空',
-                duration : 2000
+                message: '书籍价格不能为空',
+                duration: 2000
             });
             this.navCtrl.present(bookPriceToast);
-        }else if(this.bookList.bookLocation == '') {
+        } else if (this.bookList.bookLocation == '') {
             var bookLocationToast = Toast.create({
-                message : '地区不能为空',
-                duration : 2000
+                message: '地区不能为空',
+                duration: 2000
             });
             this.navCtrl.present(bookLocationToast);
-        }else if(this.bookList.bookType == '') {
+        } else if (this.bookList.bookType == '') {
             var bookTypeToast = Toast.create({
-                message : '请选择书籍类型',
-                duration : 2000
+                message: '请选择书籍类型',
+                duration: 2000
             });
             this.navCtrl.present(bookTypeToast);
-        }else if(this.bookList.bookChange == '') {
+        } else if (this.bookList.bookChange == '') {
             var bookChangeToast = Toast.create({
-                message : '请选择书籍交换方式',
-                duration : 2000
+                message: '请选择书籍交换方式',
+                duration: 2000
             });
             this.navCtrl.present(bookChangeToast);
-        }else if(this.bookList.bookContent == '') {
+        } else if (this.bookList.bookContent == '') {
             var bookContentToast = Toast.create({
-                message : '书籍简介不能为空',
-                duration : 2000
+                message: '书籍简介不能为空',
+                duration: 2000
             });
             this.navCtrl.present(bookContentToast);
-        }else {
+        } else {
             var createBookLoading = Loading.create({
-                spinner : 'circles',
-                content : '正在上传'
+                spinner: 'circles',
+                content: '正在上传'
             });
             this.navCtrl.present(createBookLoading);
-            this.createBook();
+
+            var ref = new Wilddog("https://plant-book.wilddogio.com");
+            var authData = ref.getAuth();
+            if(authData) {
+                this.createBook(authData.uid);
+            } else {
+                var authToast = Toast.create({
+                    message: '请先登录',
+                    duration: 2000
+                });
+                this.navCtrl.present(authToast);
+            }
+
 
             setTimeout(()=> {
                 this.viewCtrl.dismiss();
                 createBookLoading.dismiss();
-            },2000);
+            }, 2000);
         }
     }
 
@@ -78,21 +90,33 @@ export class CreatePage {
         this.viewCtrl.dismiss();
     }
 
-    createBook(){
-        var setBookList = new Wilddog('https://plant-book.wilddogio.com/books/' +  this.uuid());
+    createBook(uid:string) {
+        var setBookList = new Wilddog('https://plant-book.wilddogio.com/books/' + this.uuid());
+        var userref = new Wilddog("https://plant-book.wilddogio.com/users/" + uid);
+        userref.once('value', nameSnapshot => {
+            var val = nameSnapshot.val();
+            setBookList.child('fromusername').set(val.username);
+            setBookList.child('fromuserimage').set(val.image);
+        });
         setBookList.child('bookname').set(this.bookList.bookName);
         setBookList.child('bookcontent').set(this.bookList.bookContent);
-        setBookList.child('fromuid').set('');
+        setBookList.child('fromuid').set(uid);
         setBookList.child('touid').set('');
-        setBookList.child('image').set('');
+        setBookList.child('tousername').set('');
+        setBookList.child('touserimage').set('');
+        setBookList.child('image').set('http://airing.ursb.me/image/plant/1.jpg');
         setBookList.child('place').set(this.bookList.bookLocation);
-        setBookList.child('status').set(0);
+        setBookList.child('status').set('等待交易');
         setBookList.child('price').set(this.bookList.bookPrice);
         setBookList.child('classify').set(this.bookList.bookType);
         setBookList.child('change').set(this.bookList.bookChange);
         console.log('success');
     }
 
+    /**
+     * 随机生成bid
+     * @returns {string}
+     */
     uuid() {
         var s = [];
         var hexDigits = "0123456789abcdef";

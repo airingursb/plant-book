@@ -1,9 +1,11 @@
+/// <reference path="../contact/wilddog.d.ts" />
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {BookDetails} from '../home/bookdetails';
 import {BookEdit} from '../about/edit';
 import {UserAttend} from '../about/attend';
 import {UserBuild} from '../about/build';
+import 'wilddog';
 
 @Component({
     templateUrl: 'build/pages/about/about.html'

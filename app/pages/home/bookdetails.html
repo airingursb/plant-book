@@ -9,40 +9,40 @@
     <ion-list>
         <ion-item>
             <ion-avatar item-left>
-                <img src="{{bookList.userHead}}"/>
+                <img src="{{bookList.fromuserimage}}"/>
             </ion-avatar>
-            <h2 primary>{{bookList.bookUser}}</h2>
+            <h2 primary>{{bookList.fromusername}}</h2>
             <p>这个人很懒，没有留下签名</p>
         </ion-item>
         <ion-item class="textAlignCenter bookInfo">
-            <img src="{{bookList.bookHead}}"/>
-            <h1 class="book-name" primary>{{bookList.bookName}}</h1>
-            <ion-note>{{bookList.bookLocation}}</ion-note>
-            <p class="book-content">{{bookList.bookContent}}</p>
+            <img src="{{bookList.image}}"/>
+            <h1 class="book-name" primary>{{bookList.bookname}}</h1>
+            <ion-note>{{bookList.place}}</ion-note>
+            <p class="book-content">{{bookList.bookcontent}}</p>
             <button block primary (click)="bookChange()">交换</button>
-            <button block orange>交易 {{bookList.bookPrice}}</button>
+            <button block orange>交易 {{bookList.price}}</button>
         </ion-item>
     </ion-list>
     <ion-list>
         <ion-item>
             <ion-avatar item-left>
-                <img src="{{bookList.userHead}}"/>
+                <img src="{{bookList.fromuserimage}}"/>
             </ion-avatar>
-            <h2 primary>{{bookList.bookUser}}</h2>
+            <h2 primary>{{bookList.fromusername}}</h2>
             <p>这个很清真</p>
         </ion-item>
         <ion-item>
             <ion-avatar item-left>
-                <img src="{{bookList.userHead}}"/>
+                <img src="{{bookList.fromuserimage}}"/>
             </ion-avatar>
-            <h2 primary>{{bookList.bookUser}}</h2>
+            <h2 primary>{{bookList.fromusername}}</h2>
             <p>这个很清真</p>
         </ion-item>
         <ion-item>
             <ion-avatar item-left>
-                <img src="{{bookList.userHead}}"/>
+                <img src="{{bookList.fromuserimage}}"/>
             </ion-avatar>
-            <h2 primary>{{bookList.bookUser}}</h2>
+            <h2 primary>{{bookList.fromusername}}</h2>
             <p>这个很清真</p>
         </ion-item>
     </ion-list>

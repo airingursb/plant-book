@@ -1,22 +1,21 @@
+/// <reference path="../contact/wilddog.d.ts" />
 import {Component} from '@angular/core';
 import {NavController, NavParams, Modal, Storage, LocalStorage} from 'ionic-angular';
 import {ChangePage} from '../home/change';
+import 'wilddog';
 
 @Component({
     templateUrl: 'build/pages/home/bookdetails.html'
 })
 export class BookDetails {
-    bookList
+    bookList;
 
     constructor(private navCtrl:NavController, private navParams:NavParams) {
         this.bookList = navParams.data.book;
     }
 
     bookListSave() {
-        localStorage.setItem('bookhead', this.bookList.bookHead);
-        localStorage.setItem('bookname', this.bookList.bookName);
-        localStorage.setItem('booklocation', this.bookList.bookLocation);
-        localStorage.setItem('bookcontent', this.bookList.bookContent);
+
     }
 
     bookChange() {
