@@ -1,7 +1,7 @@
 /// <reference path="wilddog.d.ts" />
 import 'wilddog';
 import {Component} from '@angular/core';
-import {NavController, Toast, Loading, Modal, Storage, LocalStorage} from 'ionic-angular';
+import {NavController, Modal, Alert} from 'ionic-angular';
 import {Login} from '../contact/login';
 
 @Component({
@@ -30,18 +30,42 @@ export class ContactPage {
                 this.userInfo.username = val.username;
                 this.userInfo.email = val.email;
             });
-
-
         } else {
             let loginModal = Modal.create(Login);
-            // loginModal.onDismiss(data => {
-            //     this.userInfo.userHead = data.userHead;
-            //     this.userInfo.userName = data.userName;
-            //     this.userInfo.userPhone = data.userPhone;
-            //     this.userInfo.userLocation = data.userLocation;
-            //     this.userInfo.userAttend = data.userAttend;
-            //     this.userInfo.userBuild = data.userBuild;
-            // });
+            loginModal.onDismiss( data => {
+                if(data.username){
+                    this.userInfo.username = data.username;
+                    this.userInfo.email = data.email;
+                }else{
+                    this.userInfo.email = data.email;
+                    let userNameInput = Alert.create({
+                        title : '请输入用户名',
+                        inputs : [
+                            {
+                                name : 'username',
+                                placeholder : '用户名',
+                                type : 'text'
+                            }
+                        ],
+                        buttons : [
+                            {
+                                text : '确定',
+                                role : '确定',
+                                handler: data => {
+                                    if(data.username){
+                                        this.userInfo.username = data.username;
+                                        this.userInfoEdit('username',data.username);
+                                        return true;
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                    this.navCtrl.present(userNameInput);
+                }
+            });
             this.navCtrl.present(loginModal);
         }
     }
@@ -53,6 +77,51 @@ export class ContactPage {
 
         let loginModal = Modal.create(Login);
         this.navCtrl.present(loginModal);
+    }
+
+    userInfoEdit(key,data){
+        var ref = new Wilddog("https://plant-book.wilddogio.com");
+        var authData = ref.getAuth();
+
+        if(authData){
+            var userref = new Wilddog("https://plant-book.wilddogio.com/users/" + authData.uid);
+            userref.child(key).set(data);
+        }else{
+            console.log('setting failed');
+        }
+    }
+
+    userNameEdit(){
+        let userNameEdit = Alert.create({
+            title : '请输入用户名',
+            inputs : [
+                {
+                    name : 'username',
+                    placeholder : '用户名',
+                    type : 'text'
+                }
+            ],
+            buttons : [
+                {
+                    text : '确定',
+                    role : '确定',
+                    handler: data => {
+                        if(data.username){
+                            this.userInfo.username = data.username;
+                            this.userInfoEdit('username',data.username);
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                },
+                {
+                    text : '取消',
+                    role : '取消'
+                }
+            ]
+        });
+        this.navCtrl.present(userNameEdit);
     }
 
 }
