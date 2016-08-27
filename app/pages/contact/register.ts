@@ -86,7 +86,6 @@ export class Register {
                 registerLoading.dismiss();
             }, 3000);
 
-            //注册操作
         }
     }
 
@@ -114,4 +113,7 @@ export class Register {
             }
         });
     }
+
+
+
 }

@@ -1,3 +1,5 @@
+/// <reference path="wilddog.d.ts" />
+import 'wilddog';
 import {Component} from '@angular/core';
 import {NavController, Toast, Loading, Modal, Storage, LocalStorage} from 'ionic-angular';
 import {Login} from '../contact/login';
@@ -6,47 +8,48 @@ import {Login} from '../contact/login';
     templateUrl: 'build/pages/contact/contact.html'
 })
 export class ContactPage {
-    userInfo;
+
+    private userInfo:any;
 
     constructor(private navCtrl:NavController) {
         this.userInfo = {};
-        this.userInfo.userHead = "";
-        this.userInfo.userName = "";
-        this.userInfo.userPhone = "";
-        this.userInfo.userLocation = "";
-        this.userInfo.userAttend = "";
-        this.userInfo.userBuild = "";
+        this.userInfo.username = "";
+        this.userInfo.email = "";
+        this.userInfo.image = "";
+        this.userInfo.coin = "";
+
+        var ref = new Wilddog("https://plant-book.wilddogio.com");
+        var authData = ref.getAuth();
+
+        if (authData) {
+            console.log('Authenticated user with uid:', authData.uid);
+
+            var userref = new Wilddog("https://plant-book.wilddogio.com/users/" + authData.uid);
+            userref.once('value', nameSnapshot => {
+                var val = nameSnapshot.val();
+                this.userInfo.username = val.username;
+                this.userInfo.email = val.email;
+            });
 
 
-        if (localStorage.getItem('logined') == 'true') {
-            this.userInfo.userHead = localStorage.getItem('userhead');
-            this.userInfo.userName = localStorage.getItem('username');
-            this.userInfo.userPhone = localStorage.getItem('userphone');
-            this.userInfo.userLocation = localStorage.getItem('userlocation');
-            this.userInfo.userAttend = localStorage.getItem('userattend');
-            this.userInfo.userBuild = localStorage.getItem('userbuild');
         } else {
             let loginModal = Modal.create(Login);
-            loginModal.onDismiss(data => {
-                this.userInfo.userHead = data.userHead;
-                this.userInfo.userName = data.userName;
-                this.userInfo.userPhone = data.userPhone;
-                this.userInfo.userLocation = data.userLocation;
-                this.userInfo.userAttend = data.userAttend;
-                this.userInfo.userBuild = data.userBuild;
-            });
+            // loginModal.onDismiss(data => {
+            //     this.userInfo.userHead = data.userHead;
+            //     this.userInfo.userName = data.userName;
+            //     this.userInfo.userPhone = data.userPhone;
+            //     this.userInfo.userLocation = data.userLocation;
+            //     this.userInfo.userAttend = data.userAttend;
+            //     this.userInfo.userBuild = data.userBuild;
+            // });
             this.navCtrl.present(loginModal);
         }
     }
 
     loginOut() {
-        localStorage.setItem('logined', '');
-        localStorage.setItem('userhead', '');
-        localStorage.setItem('username', '');
-        localStorage.setItem('userphone', '');
-        localStorage.setItem('userlocation', '');
-        localStorage.setItem('userattend', '');
-        localStorage.setItem('userbuild', '');
+
+        var ref = new Wilddog("https://plant-book.wilddogio.com");
+        ref.unauth();
 
         let loginModal = Modal.create(Login);
         this.navCtrl.present(loginModal);
