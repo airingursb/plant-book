@@ -1,7 +1,7 @@
 /// <reference path="wilddog.d.ts" />
 import {Component} from '@angular/core';
 import {NavController, ViewController, Toast, Loading, Modal, Storage, LocalStorage} from 'ionic-angular';
-import {Register} from '../contact/register';
+import {Register} from './register';
 import 'wilddog';
 
 @Component({
@@ -51,7 +51,9 @@ export class Login {
 
             this.navCtrl.present(loginLoading);
 
-            this.authWithPasswordByWilddog(this.user.email, this.user.password, loginLoading);
+            this.authWithPasswordByWilddog(this.user.email, this.user.password);
+
+            loginLoading.dismiss();
         }
     }
 
@@ -69,7 +71,7 @@ export class Login {
      * @param email
      * @param password
      */
-    authWithPasswordByWilddog(email:string, password:string, loginLoading:Loading) {
+    authWithPasswordByWilddog(email:string, password:string) {
         var ref = new Wilddog('https://plant-book.wilddogio.com');
         // Log me in
         ref.authWithPassword({
@@ -78,13 +80,11 @@ export class Login {
         }, (error, authData) => {
             if (error) {
                 console.log('Login Failed!', error);
-                loginLoading.dismiss();
             } else {
                 console.log('Authenticated successfully with payload:', authData);
                 var userdef = new Wilddog('https://plant-book.wilddogio.com/users/' + authData.uid);
                 userdef.child('email').set(email);
                 userdef.once("value", (data) => {
-                    loginLoading.dismiss();
                     this.viewCtrl.dismiss(data.val());
                 });
             }

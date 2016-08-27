@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController, NavParams} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {BookEdit} from '../about/edit';
 
 @Component({
@@ -8,8 +8,23 @@ import {BookEdit} from '../about/edit';
 export class UserBuild {
     userBuildList;
 
-    constructor(private navCtrl:NavController, private viewCtrl:ViewController, private navParams:NavParams) {
-        this.userBuildList = navParams.data.book;
+    constructor(private navCtrl:NavController) {
+        this.userBuildList = [];
+
+        var userref = new Wilddog("https://plant-book.wilddogio.com");
+        var authData = userref.getAuth();
+        if(authData){
+            var bookref = new Wilddog("https://plant-book.wilddogio.com/books");
+            bookref.orderByChild('touid').equalTo(authData.uid).on("value", (snapshot) => {
+                snapshot.forEach((data) => {
+                    console.log(data.key());
+                    console.log(data.val());
+                    this.userBuildList.push(data.val());
+                });
+            });
+        }else{
+            console.log('fail to get booklist');
+        }
     }
 
     bookDetailEdit(event, userBuild) {

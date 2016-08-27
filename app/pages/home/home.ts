@@ -1,9 +1,9 @@
 /// <reference path="../contact/wilddog.d.ts" />
 import {Component} from '@angular/core';
 import {NavController, Modal} from 'ionic-angular';
-import {BookDetails} from '../home/bookdetails';
-import {SearchPage} from '../home/search';
-import {CreatePage} from '../home/create';
+import {BookDetails} from './bookdetails';
+import {SearchPage} from './search';
+import {CreatePage} from './create';
 import 'wilddog';
 
 @Component({
@@ -21,7 +21,7 @@ export class HomePage {
         this.book.bookName = "";
 
         var ref = new Wilddog("https://plant-book.wilddogio.com/books");
-        ref.orderByChild("bookname").on("value", (snapshot) => {
+        ref.orderByChild("bookname").once("value", (snapshot) => {
             snapshot.forEach((data) => {
                 console.log(data.key());
                 console.log(data.val());

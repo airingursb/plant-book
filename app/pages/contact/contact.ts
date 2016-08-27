@@ -2,7 +2,7 @@
 import 'wilddog';
 import {Component} from '@angular/core';
 import {NavController, Modal, Alert} from 'ionic-angular';
-import {Login} from '../contact/login';
+import {Login} from './login';
 
 @Component({
     templateUrl: 'build/pages/contact/contact.html'

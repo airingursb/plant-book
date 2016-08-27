@@ -15,82 +15,30 @@ export class AboutPage {
     userBuildList;
 
     constructor(private navCtrl:NavController) {
-        this.userAttendList = [
-            {
-                "bookHead": "../images/1.jpg",
-                "bookName": "Test Book1",
-                "bookSituation": "等待交换",
-                "bookContent": "This is a test book!This is a test book!This is a test book!This is a test book!This is a test book!",
-                "bookLocation": "广州",
-                "bookType": "科幻小说",
-                "bookChange": "当面交换",
-                "bookPrice": "400",
-                "bookUser": "zyktrcn",
-                "userHead": "../images/1.jpg"
-            },
-            {
-                "bookHead": "../images/2.jpg",
-                "bookName": "Test Book2",
-                "bookSituation": "等待交换",
-                "bookContent": "This is a test book!This is a test book!This is a test book!This is a test book!This is a test book!",
-                "bookLocation": "安徽",
-                "bookType": "言情小说",
-                "bookChange": "当面交换",
-                "bookPrice": "350",
-                "bookUser": "zyktrcn",
-                "userHead": "../images/1.jpg"
-            },
-            {
-                "bookHead": "../images/3.jpg",
-                "bookName": "Test Book3",
-                "bookSituation": "交易中",
-                "bookContent": "This is a test book!This is a test book!This is a test book!This is a test book!This is a test book!",
-                "bookLocation": "台湾",
-                "bookType": "教科书",
-                "bookChange": "快递交换",
-                "bookPrice": "800",
-                "bookUser": "zyktrcn",
-                "userHead": "../images/1.jpg"
-            },
-        ]
-        this.userBuildList = [
-            {
-                "bookHead": "../images/3.jpg",
-                "bookName": "Test Book3",
-                "bookSituation": "交易中",
-                "bookContent": "This is a test book!This is a test book!This is a test book!This is a test book!This is a test book!",
-                "bookLocation": "台湾",
-                "bookType": "教科书",
-                "bookChange": "快递交换",
-                "bookPrice": "800",
-                "bookUser": "zyktrcn",
-                "userHead": "../images/1.jpg"
-            },
-            {
-                "bookHead": "../images/4.jpg",
-                "bookName": "Test Book4",
-                "bookSituation": "等待交换",
-                "bookContent": "This is a test book!This is a test book!This is a test book!This is a test book!This is a test book!",
-                "bookLocation": "香港",
-                "bookType": "科幻小说",
-                "bookChange": "快递交换",
-                "bookPrice": "450",
-                "bookUser": "zyktrcn",
-                "userHead": "../images/1.jpg"
-            },
-            {
-                "bookHead": "../images/5.jpg",
-                "bookName": "Test Book5",
-                "bookSituation": "交换中",
-                "bookContent": "This is a test book!This is a test book!This is a test book!This is a test book!This is a test book!",
-                "bookLocation": "广州",
-                "bookType": "言情小说",
-                "bookChange": "快递交换",
-                "bookPrice": "700",
-                "bookUser": "zyktrcn",
-                "userHead": "../images/1.jpg"
-            },
-        ]
+
+        this.userAttendList = [];
+        this.listBook('fromuid',this.userAttendList);
+        this.userBuildList = [];
+        this.listBook('touid',this.userBuildList);
+    }
+
+    listBook(type,bookList){
+        var userref = new Wilddog("https://plant-book.wilddogio.com");
+        var authData = userref.getAuth();
+        if(authData){
+            var bookref = new Wilddog("https://plant-book.wilddogio.com/books");
+            bookref.orderByChild(type).equalTo(authData.uid).limitToLast(3).on("value", (snapshot) => {
+                snapshot.forEach((data) => {
+                    console.log(data.key());
+                    console.log(data.val());
+                    bookList.push(data.val());
+                });
+            });
+        }else{
+            console.log('fail to get booklist')
+        }
+
+
     }
 
     bookDetailClick(event, userAttend) {
@@ -98,7 +46,7 @@ export class AboutPage {
     }
 
     userAttendMore(event) {
-        this.navCtrl.push(UserAttend, {book: this.userAttendList});
+        this.navCtrl.push(UserAttend);
     }
 
     bookDetailEdit(event, userBuild) {
@@ -106,6 +54,6 @@ export class AboutPage {
     }
 
     userBuildMore(event) {
-        this.navCtrl.push(UserBuild, {book: this.userBuildList});
+        this.navCtrl.push(UserBuild);
     }
 }

@@ -12,21 +12,21 @@
         </ion-list-header>
         <ion-item *ngFor="let userAttend of userAttendList" (click)="bookDetailClick($even,userAttend)">
             <ion-avatar item-left>
-                <img src="{{userAttend.bookHead}}"/>
+                <img src="{{userAttend.image}}"/>
             </ion-avatar>
             <div>
-                <h2 class="book-name" primary>{{userAttend.bookName}}</h2>
-                <p class="book-situation">{{userAttend.bookSituation}}</p>
+                <h2 class="book-name" primary>{{userAttend.bookname}}</h2>
+                <p class="book-situation">{{userAttend.state}}</p>
             </div>
             <div>
                 <ion-icon name="home"></ion-icon>
-                <h3 class="book-location">{{userAttend.bookLocation}}</h3>
-                <h3 class="book-type">{{userAttend.bookType}}</h3>
-                <h3 class="book-change">{{userAttend.bookChange}}</h3>
+                <h3 class="book-location">{{userAttend.place}}</h3>
+                <h3 class="book-type">{{userAttend.classify}}</h3>
+                <h3 class="book-change">{{userAttend.change}}</h3>
             </div>
             <div>
-                <h3 class="book-price" orange>${{userAttend.bookPrice}}</h3>
-                <h3 class="book-user" light>用户：{{userAttend.bookUser}}</h3>
+                <h3 class="book-price" orange>${{userAttend.price}}</h3>
+                <h3 class="book-user" light>用户：{{userAttend.fromusername}}</h3>
             </div>
         </ion-item>
         <ion-item class="textAlignCenter more">
@@ -39,21 +39,21 @@
         </ion-list-header>
         <ion-item *ngFor="let userBuild of userBuildList" (click)="bookDetailEdit($even,userBuild)">
             <ion-avatar item-left>
-                <img src="{{userBuild.bookHead}}"/>
+                <img src="{{userBuild.image}}"/>
             </ion-avatar>
             <div>
-                <h2 class="book-name" primary>{{userBuild.bookName}}</h2>
-                <p class="book-situation">{{userBuild.bookSituation}}</p>
+                <h2 class="book-name" primary>{{userBuild.bookname}}</h2>
+                <p class="book-situation">{{userBuild.state}}</p>
             </div>
             <div>
                 <ion-icon name="home"></ion-icon>
-                <h3 class="book-location">{{userBuild.bookLocation}}</h3>
-                <h3 class="book-type">{{userBuild.bookType}}</h3>
-                <h3 class="book-change">{{userBuild.bookChange}}</h3>
+                <h3 class="book-location">{{userBuild.place}}</h3>
+                <h3 class="book-type">{{userBuild.classify}}</h3>
+                <h3 class="book-change">{{userBuild.change}}</h3>
             </div>
             <div>
-                <h3 class="book-price" orange>${{userBuild.bookPrice}}</h3>
-                <h3 class="book-user" light>用户：{{userBuild.bookUser}}</h3>
+                <h3 class="book-price" orange>${{userBuild.price}}</h3>
+                <h3 class="book-user" light>用户：{{userBuild.fromusername}}</h3>
             </div>
         </ion-item>
         <ion-item class="textAlignCenter more">

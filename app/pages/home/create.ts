@@ -91,13 +91,15 @@ export class CreatePage {
     }
 
     createBook(uid:string) {
-        var setBookList = new Wilddog('https://plant-book.wilddogio.com/books/' + this.uuid());
+        var bid:string = this.uuid();
+        var setBookList = new Wilddog('https://plant-book.wilddogio.com/books/' + bid);
         var userref = new Wilddog("https://plant-book.wilddogio.com/users/" + uid);
         userref.once('value', nameSnapshot => {
             var val = nameSnapshot.val();
             setBookList.child('fromusername').set(val.username);
             setBookList.child('fromuserimage').set(val.image);
         });
+        setBookList.child('bid').set(bid);
         setBookList.child('bookname').set(this.bookList.bookName);
         setBookList.child('bookcontent').set(this.bookList.bookContent);
         setBookList.child('fromuid').set(uid);
