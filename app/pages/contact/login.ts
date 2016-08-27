@@ -17,13 +17,6 @@ export class Login {
         this.user.email = "";
         this.user.password = "";
 
-        // this.userInfo = {};
-        // this.userInfo.userHead = "../images/1.jpg";
-        // this.userInfo.userName = "zyktrcn";
-        // this.userInfo.email = "15622386480";
-        // this.userInfo.userLocation = "广州";
-        // this.userInfo.userAttend = "50";
-        // this.userInfo.userBuild = "50";
     }
 
     //登陆操作
@@ -36,7 +29,6 @@ export class Login {
             });
 
             this.navCtrl.present(usernameFormat);
-
         }
         //判断密码是否为空
         //判断成功则提示“密码不能为空”
@@ -59,11 +51,8 @@ export class Login {
 
             this.navCtrl.present(loginLoading);
 
-            this.authWithPasswordByWilddog(this.user.email, this.user.password)
+            this.authWithPasswordByWilddog(this.user.email, this.user.password, this.viewCtrl, loginLoading);
 
-            setTimeout(() => {
-                loginLoading.dismiss();
-            }, 3000);
         }
     }
 
@@ -81,7 +70,7 @@ export class Login {
      * @param email
      * @param password
      */
-    public authWithPasswordByWilddog(email:string, password:string) {
+    authWithPasswordByWilddog(email:string, password:string, viewCtrl: ViewController, loginLoading: Loading) {
         var ref = new Wilddog('https://plant-book.wilddogio.com');
         // Log me in
         ref.authWithPassword({
@@ -92,6 +81,8 @@ export class Login {
                 console.log('Login Failed!', error);
             } else {
                 console.log('Authenticated successfully with payload:', authData);
+                loginLoading.dismiss();
+                viewCtrl.dismiss();
             }
         });
     }
