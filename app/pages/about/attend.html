@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-navbar navbar>
+        <ion-title>
+            我的参与
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="attendPage">
+    <ion-list>
+        <ion-item *ngFor="let userAttend of userAttendList" (click)="bookDetailClick($even,userAttend)">
+            <ion-avatar item-left>
+                <img src="{{userAttend.bookHead}}" />
+            </ion-avatar>
+            <div>
+                <h2 class="book-name" primary>{{userAttend.bookName}}</h2>
+                <p class="book-situation">{{userAttend.bookSituation}}</p>
+            </div>
+            <div>
+                <ion-icon name="home"></ion-icon>
+                <h3 class="book-location">{{userAttend.bookLocation}}</h3>
+                <h3 class="book-type">{{userAttend.bookType}}</h3>
+                <h3 class="book-change">{{userAttend.bookChange}}</h3>
+            </div>
+            <div>
+                <h3 class="book-price" orange>${{userAttend.bookPrice}}</h3>
+                <h3 class="book-user" light>用户：{{userAttend.bookUser}}</h3>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

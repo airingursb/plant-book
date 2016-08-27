@@ -1,0 +1,32 @@
+// http://ionicframework.com/docs/v2/theming/
+// App Shared Imports
+// --------------------------------------------------
+// These are the imports which make up the design of this app.
+// By default each design mode includes these shared imports.
+// App Shared Sass variables belong in app.variables.scss.
+@import "../pages/about/about";
+@import "../pages/about/edit";
+@import "../pages/about/attend";
+@import "../pages/about/build";
+@import "../pages/contact/contact";
+@import "../pages/contact/register";
+@import "../pages/contact/login";
+@import "../pages/home/home";
+@import "../pages/home/bookdetails";
+@import "../pages/home/create";
+@import "../pages/home/change";
+
+//清除左内边距
+.padding-leftClear {
+  padding-left: 0;
+}
+
+//靠右
+.textAlignRight {
+  text-align: right;
+}
+
+//靠中
+.textAlignCenter {
+  text-align: center;
+}

@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            用户中心
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="userCenterPage">
+    <ion-list class="basicInfo">
+        <ion-item>
+            <ion-avatar item-right>
+                <img src="{{userInfo.userHead}}"/>
+            </ion-avatar>
+            <div item-right>></div>
+            <h2>头像</h2>
+        </ion-item>
+        <ion-item>
+            <h2 item-right>{{userInfo.userName}}</h2>
+            <div item-right>></div>
+            <h2>名字</h2>
+        </ion-item>
+        <ion-item>
+            <h2 item-right>{{userInfo.userPhone}}</h2>
+            <div item-right>></div>
+            <h2>手机号</h2>
+        </ion-item>
+        <ion-item>
+            <h2 item-right>{{userInfo.userLocation}}</h2>
+            <div item-right>></div>
+            <h2>地区</h2>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item>
+            <h2 item-right>{{userInfo.userAttend}}</h2>
+            <div item-right>></div>
+            <h2>参与数</h2>
+        </ion-item>
+        <ion-item>
+            <h2 item-right>{{userInfo.userBuild}}</h2>
+            <div item-right>></div>
+            <h2>发布数</h2>
+        </ion-item>
+    </ion-list>
+    <div padding>
+        <button block round (click)="loginOut()">注销</button>
+    </div>
+</ion-content>

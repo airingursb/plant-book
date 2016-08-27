@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            消息
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="messagePage">
+    <ion-list>
+        <ion-list-header>
+            我的参与
+        </ion-list-header>
+        <ion-item *ngFor="let userAttend of userAttendList" (click)="bookDetailClick($even,userAttend)">
+            <ion-avatar item-left>
+                <img src="{{userAttend.bookHead}}"/>
+            </ion-avatar>
+            <div>
+                <h2 class="book-name" primary>{{userAttend.bookName}}</h2>
+                <p class="book-situation">{{userAttend.bookSituation}}</p>
+            </div>
+            <div>
+                <ion-icon name="home"></ion-icon>
+                <h3 class="book-location">{{userAttend.bookLocation}}</h3>
+                <h3 class="book-type">{{userAttend.bookType}}</h3>
+                <h3 class="book-change">{{userAttend.bookChange}}</h3>
+            </div>
+            <div>
+                <h3 class="book-price" orange>${{userAttend.bookPrice}}</h3>
+                <h3 class="book-user" light>用户：{{userAttend.bookUser}}</h3>
+            </div>
+        </ion-item>
+        <ion-item class="textAlignCenter more">
+            <ion-button clear (click)="userAttendMore($even)">更多 ></ion-button>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-list-header>
+            我的发布
+        </ion-list-header>
+        <ion-item *ngFor="let userBuild of userBuildList" (click)="bookDetailEdit($even,userBuild)">
+            <ion-avatar item-left>
+                <img src="{{userBuild.bookHead}}"/>
+            </ion-avatar>
+            <div>
+                <h2 class="book-name" primary>{{userBuild.bookName}}</h2>
+                <p class="book-situation">{{userBuild.bookSituation}}</p>
+            </div>
+            <div>
+                <ion-icon name="home"></ion-icon>
+                <h3 class="book-location">{{userBuild.bookLocation}}</h3>
+                <h3 class="book-type">{{userBuild.bookType}}</h3>
+                <h3 class="book-change">{{userBuild.bookChange}}</h3>
+            </div>
+            <div>
+                <h3 class="book-price" orange>${{userBuild.bookPrice}}</h3>
+                <h3 class="book-user" light>用户：{{userBuild.bookUser}}</h3>
+            </div>
+        </ion-item>
+        <ion-item class="textAlignCenter more">
+            <ion-button clear (click)="userBuildMore($even)">更多 ></ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>
