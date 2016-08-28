@@ -20,6 +20,10 @@ export class HomePage {
         this.book = {};
         this.book.bookName = "";
 
+    }
+
+    onPageWillEnter() {
+        this.bookList = [];
         var ref = new Wilddog("https://plant-book.wilddogio.com/books");
         ref.orderByChild("bookname").once("value", (snapshot) => {
             snapshot.forEach((data) => {
@@ -28,7 +32,6 @@ export class HomePage {
                 this.bookList.push(data.val());
             });
         });
-
     }
 
     bookDetailClick(event, book) {

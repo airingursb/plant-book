@@ -1,7 +1,7 @@
 /// <reference path="../contact/wilddog.d.ts" />
 import 'wilddog';
 import {Component, isDevMode} from '@angular/core';
-import {NavController, ViewController, NavParams} from 'ionic-angular';
+import {NavController, ViewController, NavParams, Toast} from 'ionic-angular';
 
 @Component({
     templateUrl: 'build/pages/home/discuss.html'
@@ -16,6 +16,9 @@ export class Discuss {
     constructor(private navCtrl:NavController, private viewCtrl:ViewController, private navParams:NavParams) {
 
         this.bid = navParams.data;
+    }
+
+    onPageWillEnter() {
 
         var dataref = new Wilddog('https://plant-book.wilddogio.com');
         var authData = dataref.getAuth();
@@ -23,11 +26,18 @@ export class Discuss {
         if (authData) {
             this.uid = authData.uid;
         } else {
-
+            // 用户未登录
+            var noLoginToast = Toast.create({
+                message: '用户尚未登录,请先登录!',
+                duration: 2000
+            });
+            this.navCtrl.present(noLoginToast);
         }
-
     }
 
+    /**
+     * 添加评论
+     */
     comment() {
         var ref = new Wilddog('https://plant-book.wilddogio.com/comments/' + this.uuid());
         var userref = new Wilddog("https://plant-book.wilddogio.com/users/" + this.uid);

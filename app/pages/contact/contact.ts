@@ -18,6 +18,9 @@ export class ContactPage {
         this.userInfo.image = "";
         this.userInfo.coin = "";
 
+    }
+
+    onPageWillEnter() {
         var ref = new Wilddog("https://plant-book.wilddogio.com");
         var authData = ref.getAuth();
 
@@ -29,34 +32,47 @@ export class ContactPage {
                 var val = nameSnapshot.val();
                 this.userInfo.username = val.username;
                 this.userInfo.email = val.email;
+                if (val.coin) {
+                    this.userInfo.coin = val.coin;
+                } else {
+                    this.userInfo.coin = 0;
+                    userref.child('coin').set(0);
+                }
+                if (val.image) {
+                    this.userInfo.image = val.image;
+                } else {
+                    this.userInfo.image = 'http://airing.ursb.me/image/avatar/40.png';
+                    userref.child('image').set('http://airing.ursb.me/image/avatar/40.png');
+                }
+
             });
         } else {
             let loginModal = Modal.create(Login);
-            loginModal.onDismiss( data => {
-                if(data.username){
+            loginModal.onDismiss(data => {
+                if (data.username) {
                     this.userInfo.username = data.username;
                     this.userInfo.email = data.email;
-                }else{
+                } else {
                     this.userInfo.email = data.email;
                     let userNameInput = Alert.create({
-                        title : '请输入用户名',
-                        inputs : [
+                        title: '请输入用户名',
+                        inputs: [
                             {
-                                name : 'username',
-                                placeholder : '用户名',
-                                type : 'text'
+                                name: 'username',
+                                placeholder: '用户名',
+                                type: 'text'
                             }
                         ],
-                        buttons : [
+                        buttons: [
                             {
-                                text : '确定',
-                                role : '确定',
+                                text: '确定',
+                                role: '确定',
                                 handler: data => {
-                                    if(data.username){
+                                    if (data.username) {
                                         this.userInfo.username = data.username;
-                                        this.userInfoEdit('username',data.username);
+                                        this.userInfoEdit('username', data.username);
                                         return true;
-                                    }else{
+                                    } else {
                                         return false;
                                     }
                                 }
@@ -70,54 +86,58 @@ export class ContactPage {
         }
     }
 
+    /**
+     * 注销用户
+     */
     loginOut() {
-
         var ref = new Wilddog("https://plant-book.wilddogio.com");
+        // 注销用户
         ref.unauth();
 
+        // 返回登录页
         let loginModal = Modal.create(Login);
         this.navCtrl.present(loginModal);
     }
 
-    userInfoEdit(key,data){
+    userInfoEdit(key, data) {
         var ref = new Wilddog("https://plant-book.wilddogio.com");
         var authData = ref.getAuth();
 
-        if(authData){
+        if (authData) {
             var userref = new Wilddog("https://plant-book.wilddogio.com/users/" + authData.uid);
             userref.child(key).set(data);
-        }else{
+        } else {
             console.log('setting failed');
         }
     }
 
-    userNameEdit(){
+    userNameEdit() {
         let userNameEdit = Alert.create({
-            title : '请输入用户名',
-            inputs : [
+            title: '请输入用户名',
+            inputs: [
                 {
-                    name : 'username',
-                    placeholder : '用户名',
-                    type : 'text'
+                    name: 'username',
+                    placeholder: '用户名',
+                    type: 'text'
                 }
             ],
-            buttons : [
+            buttons: [
                 {
-                    text : '确定',
-                    role : '确定',
+                    text: '确定',
+                    role: '确定',
                     handler: data => {
-                        if(data.username){
+                        if (data.username) {
                             this.userInfo.username = data.username;
-                            this.userInfoEdit('username',data.username);
+                            this.userInfoEdit('username', data.username);
                             return true;
-                        }else{
+                        } else {
                             return false;
                         }
                     }
                 },
                 {
-                    text : '取消',
-                    role : '取消'
+                    text: '取消',
+                    role: '取消'
                 }
             ]
         });

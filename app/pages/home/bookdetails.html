@@ -25,7 +25,7 @@
             <ion-note>{{book.place}}</ion-note>
             <p class="book-content">{{book.bookcontent}}</p>
             <button block primary (click)="bookChange()">交换</button>
-            <button block orange>交易 {{book.price}}</button>
+            <button block orange (click)="buyBook()">交易 {{book.price}}</button>
         </ion-item>
     </ion-list>
     <ion-list>

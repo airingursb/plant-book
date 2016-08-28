@@ -9,17 +9,18 @@ import 'wilddog';
 })
 
 export class Login {
+
     private user:any;
-    private userInfo:any;
 
     constructor(private navCtrl:NavController, private viewCtrl:ViewController) {
         this.user = {};
         this.user.email = "";
         this.user.password = "";
-
     }
 
-    //登陆操作
+    /**
+     * 用户登录
+     */
     login() {
         //判断成功则提示“email不能为空”
         if (this.user.username == "") {
