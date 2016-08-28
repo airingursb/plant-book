@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            用户中心
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="userCenterPage">
+    <ion-list class="basicInfo">
+        <ion-item >
+            <div class="textAlignCenter">
+                <img src="{{image}}" (click)="imagePicker()">
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <div padding>
+        <button block round (click)="imageUpload()">确定</button>
+    </div>
+</ion-content>

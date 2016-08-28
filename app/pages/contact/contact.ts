@@ -3,6 +3,7 @@ import 'wilddog';
 import {Component} from '@angular/core';
 import {NavController, Modal, Alert} from 'ionic-angular';
 import {Login} from './login';
+import {imageEditPage} from './imageedit';
 
 @Component({
     templateUrl: 'build/pages/contact/contact.html'
@@ -144,4 +145,14 @@ export class ContactPage {
         this.navCtrl.present(userNameEdit);
     }
 
+    imageEdit(){
+        var ref = new Wilddog("https://plant-book.wilddogio.com");
+        var authData = ref.getAuth();
+
+        if(authData){
+            this.navCtrl.push(imageEditPage,authData.uid);
+        }else{
+            console.log('setting failed');
+        }
+    }
 }
