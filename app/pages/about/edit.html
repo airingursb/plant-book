@@ -41,7 +41,7 @@
         </ion-item>
         <ion-item>
             <ion-label>书本简介</ion-label>
-            <ion-textarea [(ngModel)]="bookList.content"></ion-textarea>
+            <ion-textarea [(ngModel)]="bookList.bookcontent"></ion-textarea>
         </ion-item>
         <ion-item>
             <h2 item-left grey>书本封面</h2>
@@ -51,7 +51,7 @@
         </ion-item>
     </ion-list>
     <div padding>
-        <button block round primary>确认修改</button>
-        <button block round danger>删除书籍</button>
+        <button block round primary (click)="editConfirm()">确认修改</button>
+        <button block round danger (click)="removeBook()">删除书籍</button>
     </div>
 </ion-content>

@@ -15,7 +15,7 @@ export class UserAttend {
         var authData = userref.getAuth();
         if(authData){
             var bookref = new Wilddog("https://plant-book.wilddogio.com/books");
-            bookref.orderByChild('fromuid').equalTo(authData.uid).on("value", (snapshot) => {
+            bookref.orderByChild('touid').equalTo(authData.uid).once("value", (snapshot) => {
                 snapshot.forEach((data) => {
                     console.log(data.key());
                     console.log(data.val());

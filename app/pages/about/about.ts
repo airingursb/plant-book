@@ -17,9 +17,9 @@ export class AboutPage {
     constructor(private navCtrl:NavController) {
 
         this.userAttendList = [];
-        this.listBook('fromuid',this.userAttendList);
+        this.listBook('touid',this.userAttendList);
         this.userBuildList = [];
-        this.listBook('touid',this.userBuildList);
+        this.listBook('fromuid',this.userBuildList);
     }
 
     listBook(type,bookList){
@@ -27,7 +27,7 @@ export class AboutPage {
         var authData = userref.getAuth();
         if(authData){
             var bookref = new Wilddog("https://plant-book.wilddogio.com/books");
-            bookref.orderByChild(type).equalTo(authData.uid).limitToLast(3).on("value", (snapshot) => {
+            bookref.orderByChild(type).equalTo(authData.uid).limitToLast(3).once("value", (snapshot) => {
                 snapshot.forEach((data) => {
                     console.log(data.key());
                     console.log(data.val());
@@ -40,6 +40,7 @@ export class AboutPage {
 
 
     }
+
 
     bookDetailClick(event, userAttend) {
         this.navCtrl.push(BookDetails, {book: userAttend});

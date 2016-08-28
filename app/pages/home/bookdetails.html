@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar navbar>
         <ion-title>
-            {{bookList.bookName}}
+            {{book.bookname}}
         </ion-title>
         <ion-buttons end>
             <button royal (click)="commend()">
@@ -14,41 +14,27 @@
     <ion-list>
         <ion-item>
             <ion-avatar item-left>
-                <img src="{{bookList.fromuserimage}}"/>
+                <img src="{{book.fromuserimage}}"/>
             </ion-avatar>
-            <h2 primary>{{bookList.fromusername}}</h2>
+            <h2 primary>{{book.fromusername}}</h2>
             <p>这个人很懒，没有留下签名</p>
         </ion-item>
         <ion-item class="textAlignCenter bookInfo">
-            <img src="{{bookList.image}}"/>
-            <h1 class="book-name" primary>{{bookList.bookname}}</h1>
-            <ion-note>{{bookList.place}}</ion-note>
-            <p class="book-content">{{bookList.bookcontent}}</p>
+            <img src="{{book.image}}"/>
+            <h1 class="book-name" primary>{{book.bookname}}</h1>
+            <ion-note>{{book.place}}</ion-note>
+            <p class="book-content">{{book.bookcontent}}</p>
             <button block primary (click)="bookChange()">交换</button>
-            <button block orange>交易 {{bookList.price}}</button>
+            <button block orange>交易 {{book.price}}</button>
         </ion-item>
     </ion-list>
     <ion-list>
-        <ion-item>
+        <ion-item *ngFor="let comment of comments">
             <ion-avatar item-left>
-                <img src="{{bookList.fromuserimage}}"/>
+                <img src="{{comment.fromuserimage}}"/>
             </ion-avatar>
-            <h2 primary>{{bookList.fromusername}}</h2>
-            <p>这个很清真</p>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-left>
-                <img src="{{bookList.fromuserimage}}"/>
-            </ion-avatar>
-            <h2 primary>{{bookList.fromusername}}</h2>
-            <p>这个很清真</p>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-left>
-                <img src="{{bookList.fromuserimage}}"/>
-            </ion-avatar>
-            <h2 primary>{{bookList.fromusername}}</h2>
-            <p>这个很清真</p>
+            <h2 primary>{{comment.fromusername}}</h2>
+            <p>{{comment.text}}</p>
         </ion-item>
     </ion-list>
 </ion-content>
