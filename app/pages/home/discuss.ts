@@ -1,7 +1,7 @@
 /// <reference path="../contact/wilddog.d.ts" />
 import 'wilddog';
 import {Component, isDevMode} from '@angular/core';
-import {NavController, ViewController, NavParams, Toast} from 'ionic-angular';
+import {NavController, ViewController, NavParams, ToastController} from 'ionic-angular';
 
 @Component({
     templateUrl: 'build/pages/home/discuss.html'
@@ -13,7 +13,7 @@ export class Discuss {
     private bid:string;
     private usercommend:string = "";
 
-    constructor(private navCtrl:NavController, private viewCtrl:ViewController, private navParams:NavParams) {
+    constructor(private navCtrl:NavController, private viewCtrl:ViewController, private navParams:NavParams, private toastCtrl:ToastController) {
 
         this.bid = navParams.data;
     }
@@ -27,11 +27,11 @@ export class Discuss {
             this.uid = authData.uid;
         } else {
             // 用户未登录
-            var noLoginToast = Toast.create({
+            var noLoginToast = this.toastCtrl.create({
                 message: '用户尚未登录,请先登录!',
                 duration: 2000
             });
-            this.navCtrl.present(noLoginToast);
+            noLoginToast.present();
         }
     }
 

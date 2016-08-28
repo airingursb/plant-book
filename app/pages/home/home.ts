@@ -1,6 +1,6 @@
 /// <reference path="../contact/wilddog.d.ts" />
 import {Component} from '@angular/core';
-import {NavController, Modal} from 'ionic-angular';
+import {NavController, ModalController} from 'ionic-angular';
 import {BookDetails} from './bookdetails';
 import {SearchPage} from './search';
 import {CreatePage} from './create';
@@ -14,7 +14,7 @@ export class HomePage {
     private bookList:any;
     private book:any;
 
-    constructor(private navCtrl:NavController) {
+    constructor(private navCtrl:NavController, private modalCtrl:ModalController) {
 
         this.bookList = [];
         this.book = {};
@@ -39,13 +39,13 @@ export class HomePage {
     }
 
     search() {
-        let searchModal = Modal.create(SearchPage);
-        this.navCtrl.present(searchModal);
+        let searchModal = this.modalCtrl.create(SearchPage);
+        searchModal.present();
     }
 
     create() {
-        let createModal = Modal.create(CreatePage);
-        this.navCtrl.present(createModal);
+        let createModal = this.modalCtrl.create(CreatePage);
+        createModal.present();
     }
 
 }

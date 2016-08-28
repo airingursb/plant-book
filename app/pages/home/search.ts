@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController, Toast} from 'ionic-angular';
+import {NavController, ViewController, ToastController} from 'ionic-angular';
 import {SearchBookPage} from '../home/searchbook';
 
 @Component({
@@ -11,7 +11,7 @@ export class SearchPage {
     change;
     key;
 
-    constructor(private navCtrl:NavController, private viewCtrl:ViewController) {
+    constructor(private navCtrl:NavController, private viewCtrl:ViewController, private toastCtrl:ToastController) {
         this.place = '';
         this.classify = '';
         this.change = '';
@@ -94,11 +94,11 @@ export class SearchPage {
             console.log(searchlist);
             this.navCtrl.push(SearchBookPage,searchlist);
         }else{
-            let searchToast = Toast.create({
+            let searchToast = this.toastCtrl.create({
                 message : '搜索选项至少填写一项',
                 duration : 2000
             });
-            this.navCtrl.present(searchToast);
+            searchToast.present();
         }
     }
 

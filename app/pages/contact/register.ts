@@ -1,6 +1,6 @@
 /// <reference path="wilddog.d.ts" />
 import {Component} from '@angular/core';
-import {NavController, ViewController, Toast, Loading} from 'ionic-angular';
+import {NavController, ViewController, ToastController, LoadingController} from 'ionic-angular';
 import 'wilddog';
 
 @Component({
@@ -11,7 +11,10 @@ export class Register {
 
     private user:any;
 
-    constructor(private navCtrl:NavController, private viewCtrl:ViewController) {
+    constructor(private navCtrl:NavController,
+                private viewCtrl:ViewController,
+                private toastCtrl:ToastController,
+                private loadingCtrl:LoadingController) {
         this.user = {};
         this.user.username = "";
         this.user.password = "";
@@ -30,54 +33,52 @@ export class Register {
         //判断正确则提示“用户名格式不正确”
 
         if (this.user.username == "" || this.user.username.length < 6) {
-            let usernameToast = Toast.create({
+            let usernameToast = this.toastCtrl.create({
                 message: "用户名格式不正确",
                 duration: 2000
             });
 
-            this.navCtrl.present(usernameToast);
+            usernameToast.present();
 
         }
         //判断密码是否为空
         //判断正确则提示“密码不能为空”
         else if (this.user.password == "") {
-            let passwordToast = Toast.create({
+            let passwordToast = this.toastCtrl.create({
                 message: "密码不能为空",
                 duration: 2000
             });
 
-            this.navCtrl.present(passwordToast);
+            passwordToast.present();
         }
         //判断密码与重复密码是否一致
         //判断正确则提示“密码与重复密码不一致”
         else if (this.user.passwordconfirm != this.user.password) {
-            let passwordconfirmToast = Toast.create({
+            let passwordconfirmToast = this.toastCtrl.create({
                 message: "密码与重复密码不一致",
                 duration: 2000
             });
 
-            this.navCtrl.present(passwordconfirmToast);
-
+            passwordconfirmToast.present();
         }
         //判断email是否为空
         //判断正确则提示“邮箱不能为空”
         else if (this.user.email == "") {
-            let telephoneToast = Toast.create({
+            let telephoneToast = this.toastCtrl.create({
                 message: "邮箱不能为空",
                 duration: 2000
             });
 
-            this.navCtrl.present(telephoneToast);
-
+            telephoneToast.present();
         }
         //注册资料正确则进行注册操作
         else {
-            let registerLoading = Loading.create({
+            let registerLoading = this.loadingCtrl.create({
                 spinner: "circles",
                 content: "正在注册"
             });
 
-            this.navCtrl.present(registerLoading);
+            registerLoading.present();
 
             // 使用 Wilddog 进行用户注册
             this.createUserByWilddog(this.user.email, this.user.password);

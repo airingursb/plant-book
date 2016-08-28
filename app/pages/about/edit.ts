@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController, NavParams, Toast} from 'ionic-angular';
+import {NavController, ViewController, NavParams, ToastController} from 'ionic-angular';
 
 @Component({
     templateUrl: 'build/pages/about/edit.html'
@@ -9,7 +9,10 @@ export class BookEdit {
     private bookList:any;
     private bid:string;
 
-    constructor(private navCtrl:NavController, private viewCtrl:ViewController, private navParams:NavParams) {
+    constructor(private navCtrl:NavController,
+                private viewCtrl:ViewController,
+                private navParams:NavParams,
+                private toastCtrl:ToastController) {
         this.bookList = navParams.data.book;
 
         var bookref = new Wilddog("https://plant-book.wilddogio.com/books");
@@ -25,47 +28,47 @@ export class BookEdit {
      */
     editConfirm() {
         if (this.bookList.bookname == '') {
-            let bookNameToast = Toast.create({
+            let bookNameToast = this.toastCtrl.create({
                 message: '书名不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookNameToast);
+            bookNameToast.present();
         } else if (this.bookList.price == '') {
-            let bookPriceToast = Toast.create({
+            let bookPriceToast = this.toastCtrl.create({
                 message: '价格不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookPriceToast);
+            bookPriceToast.present();
         } else if (this.bookList.place == '') {
-            let bookPlaceToast = Toast.create({
+            let bookPlaceToast = this.toastCtrl.create({
                 message: '请选择书籍地区',
                 duration: 2000
             });
-            this.navCtrl.present(bookPlaceToast);
+            bookPlaceToast.present();
         } else if (this.bookList.classify == '') {
-            let bookClassifyToast = Toast.create({
+            let bookClassifyToast = this.toastCtrl.create({
                 message: '请选择书籍类型',
                 duration: 2000
             });
-            this.navCtrl.present(bookClassifyToast);
+            bookClassifyToast.present();
         } else if (this.bookList.change == '') {
-            let bookChangeToast = Toast.create({
+            let bookChangeToast = this.toastCtrl.create({
                 message: '请选择交换方式',
                 duration: 2000
             });
-            this.navCtrl.present(bookChangeToast);
+            bookChangeToast.present();
         } else if (this.bookList.bookcontent == '') {
-            let bookContentToast = Toast.create({
+            let bookContentToast = this.toastCtrl.create({
                 message: '书籍简介不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookContentToast);
+            bookContentToast.present();
         } else if (this.bookList.image == '') {
-            let bookImageToast = Toast.create({
+            let bookImageToast = this.toastCtrl.create({
                 message: '书籍封面不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookImageToast);
+            bookImageToast.present();
         } else {
             var bookref = new Wilddog("https://plant-book.wilddogio.com/books/" + this.bid);
             bookref.update({

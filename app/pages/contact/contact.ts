@@ -1,9 +1,10 @@
 /// <reference path="wilddog.d.ts" />
 import 'wilddog';
 import {Component} from '@angular/core';
-import {NavController, Modal, Alert} from 'ionic-angular';
+import {NavController, ModalController, AlertController} from 'ionic-angular';
 import {Login} from './login';
 import {imageEditPage} from './imageedit';
+
 
 @Component({
     templateUrl: 'build/pages/contact/contact.html'
@@ -12,7 +13,7 @@ export class ContactPage {
 
     private userInfo:any;
 
-    constructor(private navCtrl:NavController) {
+    constructor(private navCtrl:NavController, private modalCtrl:ModalController, private alertCtrl:AlertController) {
         this.userInfo = {};
         this.userInfo.username = "";
         this.userInfo.email = "";
@@ -48,14 +49,14 @@ export class ContactPage {
 
             });
         } else {
-            let loginModal = Modal.create(Login);
-            loginModal.onDismiss(data => {
+            let loginModal = this.modalCtrl.create(Login);
+            loginModal.onDidDismiss(data => {
                 if (data.username) {
                     this.userInfo.username = data.username;
                     this.userInfo.email = data.email;
                 } else {
                     this.userInfo.email = data.email;
-                    let userNameInput = Alert.create({
+                    let userNameInput = this.alertCtrl.create({
                         title: '请输入用户名',
                         inputs: [
                             {
@@ -80,10 +81,10 @@ export class ContactPage {
                             }
                         ]
                     });
-                    this.navCtrl.present(userNameInput);
+                    userNameInput.present();
                 }
             });
-            this.navCtrl.present(loginModal);
+            loginModal.present();
         }
     }
 
@@ -96,8 +97,8 @@ export class ContactPage {
         ref.unauth();
 
         // 返回登录页
-        let loginModal = Modal.create(Login);
-        this.navCtrl.present(loginModal);
+        let loginModal = this.modalCtrl.create(Login);
+        loginModal.present();
     }
 
     userInfoEdit(key, data) {
@@ -113,7 +114,7 @@ export class ContactPage {
     }
 
     userNameEdit() {
-        let userNameEdit = Alert.create({
+        let userNameEdit = this.alertCtrl.create({
             title: '请输入用户名',
             inputs: [
                 {
@@ -142,16 +143,16 @@ export class ContactPage {
                 }
             ]
         });
-        this.navCtrl.present(userNameEdit);
+        userNameEdit.present();
     }
 
-    imageEdit(){
+    imageEdit() {
         var ref = new Wilddog("https://plant-book.wilddogio.com");
         var authData = ref.getAuth();
 
-        if(authData){
-            this.navCtrl.push(imageEditPage,authData.uid);
-        }else{
+        if (authData) {
+            this.navCtrl.push(imageEditPage, authData.uid);
+        } else {
             console.log('setting failed');
         }
     }

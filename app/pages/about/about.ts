@@ -1,6 +1,6 @@
 /// <reference path="../contact/wilddog.d.ts" />
 import {Component} from '@angular/core';
-import {NavController, Toast} from 'ionic-angular';
+import {NavController, ToastController} from 'ionic-angular';
 import {BookDetails} from '../home/bookdetails';
 import {BookEdit} from '../about/edit';
 import {UserAttend} from '../about/attend';
@@ -15,7 +15,7 @@ export class AboutPage {
     private userAttendList:any;
     private userBuildList:any;
 
-    constructor(private navCtrl:NavController) {
+    constructor(private navCtrl:NavController, private toastCtrl: ToastController) {
 
     }
 
@@ -33,11 +33,11 @@ export class AboutPage {
             });
         } else {
             // 用户未登录
-            var noLoginToast = Toast.create({
+            var noLoginToast = this.toastCtrl.create({
                 message: '用户尚未登录,请先登录!',
                 duration: 2000
             });
-            this.navCtrl.present(noLoginToast);
+            noLoginToast.present();
         }
     }
 

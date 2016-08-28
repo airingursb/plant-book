@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController, Toast, Loading} from 'ionic-angular';
+import {NavController, ViewController, ToastController, LoadingController} from 'ionic-angular';
 
 @Component({
     templateUrl: 'build/pages/home/create.html'
@@ -7,7 +7,10 @@ import {NavController, ViewController, Toast, Loading} from 'ionic-angular';
 export class CreatePage {
     bookList;
 
-    constructor(private navCtrl:NavController, private viewCtrl:ViewController) {
+    constructor(private navCtrl:NavController,
+                private viewCtrl:ViewController,
+                private toastCtrl:ToastController,
+                private loadingCtrl:LoadingController) {
         this.bookListInitial();
     }
 
@@ -24,58 +27,58 @@ export class CreatePage {
 
     bookUpload() {
         if (this.bookList.bookName == '') {
-            var bookNameToast = Toast.create({
+            var bookNameToast = this.toastCtrl.create({
                 message: '书名不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookNameToast);
+            bookNameToast.present();
         } else if (this.bookList.bookPrice == '') {
-            var bookPriceToast = Toast.create({
+            var bookPriceToast = this.toastCtrl.create({
                 message: '书籍价格不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookPriceToast);
+            bookPriceToast.present();
         } else if (this.bookList.bookLocation == '') {
-            var bookLocationToast = Toast.create({
+            var bookLocationToast = this.toastCtrl.create({
                 message: '地区不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookLocationToast);
+            bookLocationToast.present();
         } else if (this.bookList.bookType == '') {
-            var bookTypeToast = Toast.create({
+            var bookTypeToast = this.toastCtrl.create({
                 message: '请选择书籍类型',
                 duration: 2000
             });
-            this.navCtrl.present(bookTypeToast);
+            bookTypeToast.present();
         } else if (this.bookList.bookChange == '') {
-            var bookChangeToast = Toast.create({
+            var bookChangeToast = this.toastCtrl.create({
                 message: '请选择书籍交换方式',
                 duration: 2000
             });
-            this.navCtrl.present(bookChangeToast);
+            bookChangeToast.present();
         } else if (this.bookList.bookContent == '') {
-            var bookContentToast = Toast.create({
+            var bookContentToast = this.toastCtrl.create({
                 message: '书籍简介不能为空',
                 duration: 2000
             });
-            this.navCtrl.present(bookContentToast);
+            bookContentToast.present();
         } else {
-            var createBookLoading = Loading.create({
+            var createBookLoading = this.loadingCtrl.create({
                 spinner: 'circles',
                 content: '正在上传'
             });
-            this.navCtrl.present(createBookLoading);
+            createBookLoading.present();
 
             var ref = new Wilddog("https://plant-book.wilddogio.com");
             var authData = ref.getAuth();
             if(authData) {
                 this.createBook(authData.uid);
             } else {
-                var authToast = Toast.create({
+                var authToast = this.toastCtrl.create({
                     message: '请先登录',
                     duration: 2000
                 });
-                this.navCtrl.present(authToast);
+                authToast.present();
             }
 
 

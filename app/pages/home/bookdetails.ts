@@ -1,6 +1,6 @@
 /// <reference path="../contact/wilddog.d.ts" />
 import {Component} from '@angular/core';
-import {NavController, NavParams, Modal, Storage, LocalStorage, Toast} from 'ionic-angular';
+import {NavController, NavParams, ModalController, Storage, LocalStorage, ToastController} from 'ionic-angular';
 import {ChangePage} from './change';
 import {Discuss} from './discuss';
 import 'wilddog';
@@ -14,7 +14,7 @@ export class BookDetails {
     private bid:string;
     private comments:any;
 
-    constructor(private navCtrl:NavController, private navParams:NavParams) {
+    constructor(private navCtrl:NavController, private navParams:NavParams, private modalCtrl:ModalController, private toastCtrl:ToastController) {
 
         this.book = navParams.data.book;
         this.bid = navParams.data.book.bid;
@@ -39,9 +39,9 @@ export class BookDetails {
      * 交换书籍
      */
     bookChange() {
-        let bookChangeModal = Modal.create(ChangePage);
+        let bookChangeModal = this.modalCtrl.create(ChangePage);
         this.bookListSave();
-        this.navCtrl.present(bookChangeModal);
+        bookChangeModal.present();
     }
 
     /**
@@ -76,27 +76,32 @@ export class BookDetails {
                     bref.child('touserimage').set(data.val().image);
                     bref.child('status').set('交易完毕');
 
-                    var buySucceedToast = Toast.create({
+                    var touserref = new Wilddog('https://plant-book.wilddogio.com/users/' + this.book.touid);
+                    touserref.once("value", (data) => {
+                        let tousercoins = data.val().coin + this.book.price;
+                        touserref.child('coin').set(tousercoins);
+                    })
+                    var buySucceedToast = this.toastCtrl.create({
                         message: '完成购买,余额为:' + newCoin,
                         duration: 2000
                     });
-                    this.navCtrl.present(buySucceedToast);
+                    buySucceedToast.present();
                 } else {
                     console.log('余额不足,欠款为:' + newCoin);
-                    var buyFailedToast = Toast.create({
+                    var buyFailedToast = this.toastCtrl.create({
                         message: '余额不足,欠款为:' + newCoin,
                         duration: 2000
                     });
-                    this.navCtrl.present(buyFailedToast);
+                    buyFailedToast.present();
                 }
             });
         } else {
             // 用户未登录
-            var noLoginToast = Toast.create({
+            var noLoginToast = this.toastCtrl.create({
                 message: '用户尚未登录,请先登录!',
                 duration: 2000
             });
-            this.navCtrl.present(noLoginToast);
+            noLoginToast.present();
         }
     }
 
