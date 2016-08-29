@@ -54,12 +54,12 @@ export class imageEditPage {
                     params: {smfile: file}
                 }
 
-                console.log('file => ')
-                console.log(file)
+                // console.log('file => ')
+                // console.log(file)
                 console.log('this.image => ')
                 console.log(this.image)
-                console.log('this.params.smfile => ')
-                console.log(options.params.smfile)
+                // console.log('this.params.smfile => ')
+                // console.log(options.params.smfile)
                 // fileTransfer.upload(this.image, encodeURI("https://sm.ms/api/upload"), options).then(
                 //     (data) => {
                 //         // success
@@ -69,9 +69,12 @@ export class imageEditPage {
                 //         // error
                 //         console.log("500");
                 //     })
-
-                this.http.post("https://sm.ms/api/upload",options.params).subscribe(data =>{
-                    console.log("200 => " + data);
+                var body = 'Content-Disposition: form-data; name="smfile"; filename="ursb.jpg" \n' +
+                    'Content-Type: image/jpeg \n\n' +
+                    options.params.smfile
+                this.http.post("https://sm.ms/api/upload",body).subscribe(data =>{
+                    console.log("200 => " + data.json().code);
+                    console.log("200 => " + data.json().msg);
                 }, err => {
                     console.log("500 => " + err);
                 })

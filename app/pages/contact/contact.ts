@@ -20,9 +20,6 @@ export class ContactPage {
         this.userInfo.image = "";
         this.userInfo.coin = "";
 
-    }
-
-    onPageWillEnter() {
         var ref = new Wilddog("https://plant-book.wilddogio.com");
         var authData = ref.getAuth();
 
